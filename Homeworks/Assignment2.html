@@ -14,11 +14,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
 
-    <script src = "data/duomo.geojson"></script>
+    <script src = "data/other_data/duomoIcon.js"></script>
    
     <style>
         body{
          background-color: plum;
+        }
+        h1{
+            color: navy;
         }
      </style>
 </head>
@@ -38,27 +41,26 @@
     maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     
-    //var marker = L.marker([43.773059, 11.256936]).addTo(map);
-    //marker.bindPopup("Duomo di Firenze").openPopup();
     
-    L.marker([43.773059, 11.256936]).addTo(map)
-    .bindPopup('Welcome to Florence.') // YOU CAN CHANGE THE MESSAGE
-    .openPopup();
+    // L.marker([43.773059, 11.256936]).addTo(map)
+    // .bindPopup('Welcome to Florence.') 
+    // .openPopup();
 
-    var uncIcon = L.icon({
-    iconUrl: 'https://identity.unc.edu/files/2014/01/Old_Well_Graphic_twitter.jpg',   
-    iconSize: [50,50], // size of the icon
-    popupAnchor: [0,0] // where the icon is located relative to the lat lon of the point. 
-    });
-
-    var customPopup = "UNC Well<br/><img src='https://static1.squarespace.com/static/57d17e77b8a79bfa4e31641d/t/58a22fd0bebafb516ad2404a/1487024089479/unc+well.png?format=1500w' width='100px'/>";
     
-    L.geoJSON(duomoIcon, {   
-    pointToLayer: function (feature, latlng) { 
-    return L.marker(latlng, {icon: uncIcon});}}) 
-    .bindPopup(customPopup) 
-    .addTo(map); 
+    var duomo_icon = L.icon({ 
+        iconUrl: './duomowo.png',   
+        iconSize: [100,100], 
+        popupAnchor: [0,0] 
+        });
 
+    //var customPopup = "The Cathedral of Santa Maria del Fiore is commonly referred to as the Duomo. Construction furst began in 1296. The cathedral's fresco was designed by Giorgio Vasari, who was beloved by the Medici family.<br/><img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fpng-bailt&psig=AOvVaw0u2ZCSezEZ1wq3KUDTGU6W&ust=1737749008895000&source=images&cd=vfe&opi=899784' width='100px'/>";
+
+    var customPopup = "The Cathedral of Santa Maria del Fiore is commonly referred to as the Duomo. Construction on the cathedral first began in 1296. The cathedral's fresco was designed by Giorgio Vasari, who was beloved by the Medici family.<br/><img src= './duomoimage.jpg' width='180px'/>";
+
+
+        L.marker([43.773359, 11.256936], {icon: duomo_icon}) 
+        .bindPopup(customPopup) 
+        .addTo(map); 
 </script>
 
 </body>    
