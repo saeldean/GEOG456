@@ -5,10 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script src = "../Homework4/magnoliasPoints.js"></script>
+    <style>
+        table {
+            font-family: Tahoma, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        td, th {
+             border: 1px solid #dddddd;
+            text-align: left;
+            padding: 10px;
+        }
+
+    </style>
 
 </head>
+
+<script src = "../Homework4/magnoliasPoints.js"></script>
+
 <body>
-    
+
+    <table id="myTable">
+        <tr>
+          <th>Tree Genus</th>
+          <th>Tree ID Number</th>
+          <th>Year Tree was Recorded</th>
+        </tr>
+      </table>
+
+      <script>
+        var x = document.getElementById('myTable')
+
+        for (var i =0; i <data.length; i++){
+            var myNewRow = document.createElement('tr')
+
+            var myNewCell1 = document.createElement('td');
+            var myNewCell2 = document.createElement('td');
+            var myNewCell3 = document.createElement('td');
+
+            myNewCell1.innerHTML = data[i].properties.genus;
+            myNewCell2.innerHTML = data[i].properties.id_no;
+            myNewCell3.innerHTML = data[i].properties.event_year;
+
+            myNewRow.append(myNewCell1);
+            myNewRow.append(myNewCell2);
+            myNewRow.append(myNewCell3);
+
+            x.append(myNewRow);
+        }
+      </script>
+
 </body>
 </html>
