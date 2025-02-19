@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Homework 04.b</title>
 
     <style>
         table {
@@ -38,18 +38,25 @@
       </table>
 
       <script>
-        var x = document.getElementById('myTable')
+        
+        console.log(data)
+        
+        var x =document.getElementById('myTable')
 
-        for (var i =0; i <data.length; i++){
-            var myNewRow = document.createElement('tr')
+        for (var i =0; i <data.features.length; i++){
+            var myNewRow = document.createElement('tr');
 
             var myNewCell1 = document.createElement('td');
             var myNewCell2 = document.createElement('td');
             var myNewCell3 = document.createElement('td');
 
-            myNewCell1.innerHTML = data[i].properties.genus;
-            myNewCell2.innerHTML = data[i].properties.id_no;
-            myNewCell3.innerHTML = data[i].properties.event_year;
+            myNewCell1.innerText = data.features[i].properties.genus;
+            myNewCell2.innerText = data.features[i].properties.id_no;
+            myNewCell3.innerText = data.features[i].properties.event_year;
+
+            if(data.features[i].properties.event_year > 0) {
+                myNewCell3.style.backgroundColor='lightgreen'
+            }
 
             myNewRow.append(myNewCell1);
             myNewRow.append(myNewCell2);
