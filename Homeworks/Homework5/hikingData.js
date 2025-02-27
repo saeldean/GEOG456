@@ -1,4 +1,4 @@
-var hiking = {
+var data = {
     "type": "FeatureCollection",
     "name": "hikingData",
     "features": [
