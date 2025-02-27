@@ -31,47 +31,51 @@
     <div id="map"></div>
 
     <script>
-        var map = L.map('map').setView([35.5975, -82.5461], 7);
+        var map = L.map('map').setView([35.8265, -82.5493], 9);
        
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-
-
         var LeafIcon = L.Icon.extend({
-            options: {
-                iconSize:     [80, 48],
-            }
+            options: {iconSize:[25, 25],}
         })
 
-        var greenIcon = new LeafIcon({iconUrl: 'hikerIcon.png'})
-
+        var hikerIcon = new LeafIcon({iconUrl: 'hikerIcon.png'})
+        
+        //this geojson is the reason the first hiker icon shows up on the map
         var geojson = L.geoJson(data.features[0],{
             pointToLayer: function(feature,latlng){
-                return L.marker(latlng,{icon: greenIcon})
+                return L.marker(latlng,{icon: hikerIcon})
             }
         }).addTo(map);
 
         var currentValue = 0
+        
         function moveSlider(value) { 
-            //console.log(e.value)
             currentValue = value
-            map.removeLayer(geojson);
-            
+
             document.getElementById('daDay').innerHTML = 'Here is where we finsihed our hike on ' + data.features[value].properties.date + '.'
             
-            geojson = L.geoJson(data.features[value],{
-                pointToLayer: function(feature,latlng){
-                    return L.marker(latlng,{icon: greenIcon})
-                }
-            })
-            map.addLayer(geojson); // add the new layer
-            
+            var longitude = data.features[value].properties.coordinates[0]
+            var latitude = data.features[value].properties.coordinates[1]
+
+            var marker = L.marker([latitude,longitude], {icon: hikerIcon}).addTo(map);
+
+
         }
+
+        //geojson = L.geoJson(data.features[value],{
+        //        pointToLayer: function(feature,latlng){
+       //             return L.marker(latlng,{icon: hikerIcon})
+        //        }
+        //    })
+            //map.addLayer(geojson);
        
-        moveSlider(0) // start the map with the first feature
+
+        // starts the map with the first feature
+        moveSlider(0)
         window.onload = function() {
         document.getElementById('dateSlider').value = 0;  
             }; 
