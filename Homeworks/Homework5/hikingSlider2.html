@@ -25,7 +25,7 @@
 </style>
 
 <body>
-    <h2>After graduating high school, a group of my friends and I hiked over 100 miles on the AT. This map shows where we ended each day.</h2>
+    <h2>After graduating high school, I hiked over 100 miles on the AT. This map shows where I ended each day.</h2>
     <h3 id ="daDay">Day</h3>
     <input id="dateSlider" type = "range" name = "Day" min = "0" max = "10" oninput="moveSlider(this.value)">
     <div id="map"></div>
@@ -44,33 +44,30 @@
 
         var hikerIcon = new LeafIcon({iconUrl: 'hikerIcon.png'})
         
-        //this geojson is the reason the first hiker icon shows up on the map
-        var geojson = L.geoJson(data.features[0],{
-            pointToLayer: function(feature,latlng){
-                return L.marker(latlng,{icon: hikerIcon})
-            }
-        }).addTo(map);
+        //var geojson = L.geoJSON(data, {pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: hikerIcon});}}).addTo(map);
+
 
         var currentValue = 0
         
         function moveSlider(value) { 
             currentValue = value
 
-            document.getElementById('daDay').innerHTML = 'Here is where we finsihed our hike on ' + data.features[value].properties.date + '.'
+            document.getElementById('daDay').innerHTML = 'Here was my path as of ' + data.features[value].properties.date + '.'
             
             var longitude = data.features[value].properties.coordinates[0]
             var latitude = data.features[value].properties.coordinates[1]
 
             var marker = L.marker([latitude,longitude], {icon: hikerIcon}).addTo(map);
+            
 
         }
 
         //geojson = L.geoJson(data.features[value],{
         //        pointToLayer: function(feature,latlng){
-       //             return L.marker(latlng,{icon: hikerIcon})
+        //            return L.marker(latlng,{icon: hikerIcon})
         //        }
         //    })
-            //map.addLayer(geojson);
+        //    map.addLayer(geojson);
        
 
         // starts the map with the first feature
@@ -78,7 +75,6 @@
         window.onload = function() {
         document.getElementById('dateSlider').value = 0;  
             }; 
-
     </script>
 </body>
 </html>
