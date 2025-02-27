@@ -18,7 +18,7 @@
     <style>
         #map { height: 500px;  }
         body{ background-color: beige;  }
-        </style>
+    </style>
 
 </head>
 
@@ -34,7 +34,7 @@
         var map = L.map('map').setView([23.76555556,-99.32527778], 5);    
 
         var icon = L.icon({   
-        iconUrl: './magnoliaFlower',   
+        iconUrl: './magnoliaFlower.png',   
         iconSize: [50,50], 
         popupAnchor: [0,0] 
         });
@@ -43,19 +43,17 @@
         maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        var instance = L.geoJSON(data.features[1], { // open just the first instance of the geojson; that is why I added the []
-        pointToLayer: function (feature, latlng) { 
-        return L.marker(latlng, {icon:icon });}
-        }).addTo(map);
+        //var instance = 
+        
+        L.geoJSON(data, {pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: icon});}}).addTo(map);
 
-        map.addLayer(instance); 
-
+        //map.addLayer(instance); 
     </script>
 
     <script>
-        function mySlider(value){
-            document.getElementById('myText').innerHTML = 'The year is: ' + value
-        }
+        //function mySlider(value){
+        //    document.getElementById('myText').innerHTML = 'The year is: ' + value
+       // }
     </script>
 </body>
 </html>
