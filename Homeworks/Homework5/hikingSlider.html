@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 05</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+
+    <script src="./hikingData3.js" ></script>
+
+    <style>
+        #mapid{ width: 900px; height: 500px; }
+    </style>
+
+</head>
+<body>
+
+    <div class="slidecontainer">
+        <input type="range" min="1" max="10" value="1" class="slider" id="myRange">
+         Date: <span id="demo"></span>
+    </div>
+
+    <div id="mapid"></div>
+
+    <script>
+        
+        var map = L.map('mapid').setView([35.5975, -82.5461], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var hikerIcon = L.icon({
+        iconUrl: './hikerIcon.png',   
+        iconSize: [25,25],
+        popupAnchor: [0,0]
+        });
+
+        var longitudeDay0 = data.features[0].properties.coordinates[0]
+        var latitudeDay0 = data.features[0].properties.coordinates[1]
+
+        // test marker
+        //var marker = L.marker([latitudeDay0,longitudeDay0], {icon: hikerIcon}).addTo(map);
+
+        var hiker = L.geoJSON(data, { 
+        pointToLayer: function (feature, latlng) { 
+        return L.marker(latlng, {icon: hikerIcon});}
+        }).addTo(map);
+    
+        //map.addLayer(hiker) 
+
+        var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+
+     slider.oninput = function() { // in this example I am adding the oninput method after the slider element has been created. 
+          //alert(this.value); // example for debugging 
+        output.innerHTML = pts.features[(this.value-1)].properties.DTG; // get the date value and assign it to the text
+        map.removeLayer(hurricane);// remove the hurricane layer otherwise it will keep adding more and more elements
+        hurricane = L.geoJSON(pts.features.slice(0,this.value), // select the values from 0 to the slider input using the slice array method
+        // slice method might be relevant for me
+        {pointToLayer: function (feature, latlng) { 
+        return L.marker(latlng, {icon: uncIcon});}}); 
+        map.addLayer(hurricane); 
+        }
+
+        window.onload = function() {
+            slider.value = 1;  
+        }; 
+
+    </script>
+
+</body>
+</html>
