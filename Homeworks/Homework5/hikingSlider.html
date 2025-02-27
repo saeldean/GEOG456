@@ -47,27 +47,26 @@
         var latitudeDay0 = data.features[0].properties.coordinates[1]
 
         // test marker
-        //var marker = L.marker([latitudeDay0,longitudeDay0], {icon: hikerIcon}).addTo(map);
+        var marker = L.marker([latitudeDay0,longitudeDay0], {icon: hikerIcon}).addTo(map);
 
         var hiker = L.geoJSON(data, { 
         pointToLayer: function (feature, latlng) { 
         return L.marker(latlng, {icon: hikerIcon});}
         }).addTo(map);
     
-        //map.addLayer(hiker) 
 
+        //my attempt at a slider
         var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
+        var output = document.getElementById("demo");
 
-     slider.oninput = function() { // in this example I am adding the oninput method after the slider element has been created. 
-          //alert(this.value); // example for debugging 
-        output.innerHTML = pts.features[(this.value-1)].properties.DTG; // get the date value and assign it to the text
-        map.removeLayer(hurricane);// remove the hurricane layer otherwise it will keep adding more and more elements
-        hurricane = L.geoJSON(pts.features.slice(0,this.value), // select the values from 0 to the slider input using the slice array method
-        // slice method might be relevant for me
+        slider.oninput = function() { 
+        output.innerHTML = data.features[(this.value-1)].properties.day; 
+        map.removeLayer(hiker);
+        
+        hiker = L.geoJSON(data.features.slice(0,this.value), 
         {pointToLayer: function (feature, latlng) { 
-        return L.marker(latlng, {icon: uncIcon});}}); 
-        map.addLayer(hurricane); 
+        return L.marker(latlng, {icon: hikerIcon});}}); 
+        map.addLayer(hiker); 
         }
 
         window.onload = function() {
