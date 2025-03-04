@@ -9,8 +9,8 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
     })
 
 //defines the coordinates for each park
-var longitudePark0 = stateParks.features[0].geometry.coordinates[0]
-var latitudePark0 = stateParks.features[0].geometry.coordinates[1]
+//var longitudePark0 = stateParks.features[0].geometry.coordinates[0]
+//var latitudePark0 = stateParks.features[0].geometry.coordinates[1]
 
 //park icon that is displayed on map
 var parkIcon = L.icon({ 
