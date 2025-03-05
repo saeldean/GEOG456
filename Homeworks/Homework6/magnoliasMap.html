@@ -35,7 +35,31 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        //this is working.
+        var magnoliaIcon = L.icon({ 
+        iconUrl: './magnoliaIcon.png',   
+        iconSize: [50,50],
+        popupAnchor: [0,0] 
+        });
+        var feature = data.features[0]
+        // L.marker([23.76555556, -99.32527778], {icon: magnoliaIcon}).addTo(map);
+        var myLatLon = [feature.properties.latitude, feature.properties.longitude]
+        var myMarker = L.marker(myLatLon, {icon: magnoliaIcon}).addTo(map)
+        var myFeatures = data.features
+        //myMarker.on({mouseover:})
 
+        // function myMarker (e){
+
+        //     var myLatLon = [e.properties.latitude, e.properties.longitude]
+        //     L.marker(myLatLon, {icon: magnoliaIcon}).addTo(map);
+
+        // }
+
+
+        // myFeatures.forEach(e => myMarker(e))
+
+//         var myVector = L.geoJSON(data, {pointToLayer: function (feature, latlng) {return L.marker([feature.properties.latitude, feature.properties.longitude], {})}});
+// myVector.addTo(map)
     </script>
 
 </body>
