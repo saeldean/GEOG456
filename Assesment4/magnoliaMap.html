@@ -16,10 +16,46 @@
 </head>
 
 <style>
-    #map {
-            width: 100%;
-            height: 500px;
+    #container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
         }
+    
+    #map { height: 350px;
+        width: 50% }
+
+    #info {
+        border: 1px solid black;
+        display: flex;
+        align-items: flex-end;
+        height: 150px;
+        width: 50%;
+        background-color: lightgreen;}
+
+    .column {
+            width: 10%;
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            background-color: gray;
+            border: 1px solid black;
+        }
+
+    table {
+        font-family: Tahoma, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 8px; 
+        overflow: hidden; 
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 10px;
+    }
 </style>
 
 <script src = "magnoliaPoints.js"></script>
@@ -27,27 +63,56 @@
 <body>
     
     <div id="map"></div>
+    <div id="info">
+        <table id="mytable">
+            <tr>
+              <th>Scientific Name of Tree</th>
+              <th>Year Tree was Added to Database</th>
+            </tr>
+          </table>
+    </div>
+
 
     <script>
-        var map = L.map('map').setView([23.76555556, -99.32527778], 5);
+        var map = L.map('map', {attributionControl: false }).setView([0,0], 1.4);        
+        //this has attribution control so it doesn't cite leaflet at the bottom
         
-        
-        //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        //}).addTo(map);
-
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
         }).addTo(map);
 
-        //this is working.
         var magnoliaIcon = L.icon({ 
         iconUrl: './magnoliaIcon.png',   
         iconSize: [25,25],
         popupAnchor: [0,0] 
         });
     
-        var myMagnolias = L.geoJSON(data, {pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: magnoliaIcon});}}).addTo(map);
+        function myOnEachFeature(feature, layer) {
+        layer.on({mouseover: addInformation})
+        }
+        
+        L.geoJSON(data, {onEachFeature: myOnEachFeature, pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: magnoliaIcon});}}).addTo(map);
+        
+        var x = document.getElementById('mytable')
+        
+        function makeCell(e) {
+        var myNewRow = document.createElement('tr');
+        myNewRow.className = 'mytable'
+        var myNewCell1 = document.createElement('td');
+        var myNewCell2 = document.createElement('td');
+
+        myNewCell1.innerHTML = e.sci_name;
+        myNewCell2.innerHTML = e.yrcompiled;
+
+        myNewRow.append(myNewCell1);
+        myNewRow.append(myNewCell2);
+        x.append(myNewRow);
+        } 
+
+function addInformation(e) {
+    document.querySelectorAll('.mytable').forEach(el => el.remove()); // this line is needed so I can remove all rows that I have already created. 
+    makeCell(e.target.feature.properties)
+}
 
     </script>
 
