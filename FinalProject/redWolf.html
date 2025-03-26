@@ -39,7 +39,6 @@
         //var populationEstimateEndOfYear = data.features[0].properties.populationEstimateEndOfYear
 
         let size = 0
-
         function circleIcon (size){
             var markerOptions = {
                 radius: size,
@@ -59,7 +58,7 @@
             n = n + 1
             var size = feature.properties.populationEstimateEndOfYear
             return L.circleMarker(latlng, circleIcon(size));}
-        }).addTo(map); 
+        }); //.addTo(map)
 
 
         var s = 0;
