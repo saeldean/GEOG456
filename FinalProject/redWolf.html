@@ -17,29 +17,51 @@
 </head>
 
 <style>
-    #container {
-            display: flex;
-            width: 100vw;
-            height: 100vh;
-        }
-    
     #map { height: 350px;
         width: 50% }
-    
 </style>
 
 <body>
-
+    
     <div id="map"></div>
 
-
     <script>
-        var map = L.map('map', {attributionControl: false }).setView([35.7928, -75.8766], 6);        
+        var map = L.map('map', {attributionControl: false }).setView([35.7928, -75.8766], 12);        
         //this has attribution control so it doesn't cite leaflet at the bottom
         
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        }).addTo(map);
+        }).addTo(map);  
+
+        //var populationEstimateEndOfYear = data.features[0].properties.populationEstimateEndOfYear
+
+        let size = 0
+
+        function circleIcon (size){
+            var markerOptions = {
+                radius: size,
+                fillColor: "#ff7800", //make a function to change color with size
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            return markerOptions;
+        }
+
+        var n = 0;
+        L.geoJSON(data, {
+            pointToLayer: function (feature, latlng) {
+            console.log('loop: ' + n +' population size = '+feature.properties.populationEstimateEndOfYear)
+            n = n + 1
+            var size = feature.properties.populationEstimateEndOfYear
+            return L.circleMarker(latlng, circleIcon(size));}
+        }).addTo(map); 
+
+
+        //how population estimate is called in js data.features[0].properties.populationEstimateEndOfYear
+
+        
     </script>
     
 </body>
