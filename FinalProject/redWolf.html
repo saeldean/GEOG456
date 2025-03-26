@@ -40,35 +40,35 @@
 
         let size = 0
         function circleIcon (size){
-            var markerOptions = {
+            var geojsonMarkerOptions = {
                 radius: size,
-                fillColor: "#ff7800", //make a function to change color with size
+                fillColor: 'red',//make function for this
                 color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
             };
-            return markerOptions;
+            return geojsonMarkerOptions;
         }
+    
 
         var n = 0;
         L.geoJSON(data, {
             pointToLayer: function (feature, latlng) {
-            console.log('loop: ' + n +' population size = '+feature.properties.populationEstimateEndOfYear)
+            console.log('loop: ' + n + ' year = '+feature.properties.year +' population size = '+feature.properties.populationEstimateEndOfYear )
+            //console.log('loop: ' + n +' year = '+feature.properties.year)
             n = n + 1
             var size = feature.properties.populationEstimateEndOfYear
+            console.log('size: ' + size )
+
             return L.circleMarker(latlng, circleIcon(size));}
-        }); //.addTo(map)
+        }); //.addTo(map);
 
-
-        var s = 0;
-        L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
-            console.log('loop: ' + s +' year = '+feature.properties.year)
-            s = s + 1}
-        }); 
-        
-
+        L.geoJson(data.features[0],{
+            pointToLayer: function(feature,latlng){
+                return L.marker(latlng,{icon: redWolfIcon})
+            }
+        }).addTo(map);
 
         //how population estimate is called in js data.features[0].properties.populationEstimateEndOfYear
 
