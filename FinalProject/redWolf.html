@@ -26,7 +26,7 @@
     <h3><a href="https://saeldean.github.io/GEOG456/FinalProject/naturalistMap.html">iNaturalistData Map</a></h3>
     <h3 id ="daYear"></h3>
 
-    <input id="dateSlider" type = "range" name = "Year" min = "1987" max = "2023" oninput="moveSlider(this.value)">
+    <input id="dateSlider" type = "range" name = "Year" min = "1987" max = "2023" oninput= "1">
 
     <div id="map"></div>
 
@@ -42,15 +42,15 @@
 
         let size = 0
         function circleIcon (size){
-            var geojsonMarkerOptions = {
+            var markerOptions = {
                 radius: size,
-                fillColor: 'red',//make function for this
+                fillColor: 'red',
                 color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
             };
-            return geojsonMarkerOptions;
+            return markerOptions;
         }
     
 
@@ -58,7 +58,6 @@
         L.geoJSON(data, {
             pointToLayer: function (feature, latlng) {
             console.log('loop: ' + n + ' year = '+feature.properties.year +' population size = '+feature.properties.populationEstimateEndOfYear )
-            //console.log('loop: ' + n +' year = '+feature.properties.year)
             n = n + 1
             var size = feature.properties.populationEstimateEndOfYear
             console.log('size: ' + size )
@@ -66,11 +65,13 @@
             return L.circleMarker(latlng, circleIcon(size));}
         }); //.addTo(map);
 
-        L.geoJson(data.features[0],{
+
+        var geojson = L.geoJson(data.features[0],{
             pointToLayer: function(feature,latlng){
-                return L.marker(latlng,{icon: redWolfIcon})
+                return L.circleMarker(latlng,{circleIcon})
             }
         }).addTo(map);
+
 
         //how population estimate is called in js data.features[0].properties.populationEstimateEndOfYear
 
