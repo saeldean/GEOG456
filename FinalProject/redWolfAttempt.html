@@ -27,7 +27,8 @@
 <body>
     <h2>The US FWS began making releases of Red Wolves at Alligator River National Wildlife Refuge in 1987.</h2>
     <h3 id ="daYear"> The year is 1987</h3>
-    
+    <h3 id ="daSize"> </h3>
+
     <input id="dateSlider" type = "range" name = "Day" min = "0" max = "36" oninput="moveSlider(this.value)">
     
     <div id="map"></div>
@@ -54,8 +55,9 @@
         function moveSlider(value) { 
             currentValue = value; 
             
-            document.getElementById('daYear').innerHTML = 'The year is ' + data.features[value].properties.year;
-            
+            document.getElementById('daYear').innerHTML = 'The year is ' + data.features[value].properties.year +'.';
+            document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + data.features[value].properties.populationEstimateEndOfYear + ' red wolves.';
+
             if (geojsonLayer) {
                 map.removeLayer(geojsonLayer);
             }
