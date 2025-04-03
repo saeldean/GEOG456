@@ -39,19 +39,33 @@
             maxZoom: 19,
         }).addTo(map);
 
+        var iconSize = 80;
+        
         var LeafIcon = L.Icon.extend({
             options: {
-                iconSize:     [80, 48],
+                iconSize: iconSize,
                 iconAnchor:   [40, 22],
             }
         })
 
+        //var myRadius = 500
+
+        //var circleIcon = L.circle([35.7928, -75.8766], {
+        //    color: 'red',
+        //    fillColor: '#f03',
+        //    fillOpacity: 0.5,
+        //    radius: myRadius
+        //}).addTo(map);
+
+        //create function that connects population size to myRadius
+
+        
         var greenIcon = new LeafIcon({iconUrl: 'redWolfIcon.png'})
 
-        var geojson = L.geoJson(data.features[0],{
-            pointToLayer: function(feature,latlng){
-                return L.marker(latlng,{icon: greenIcon})
-        }}).addTo(map);
+        //var geojson = L.geoJson(data.features[0],{
+        //    pointToLayer: function(feature,latlng){
+        //        return L.marker(latlng,{icon: greenIcon})
+        //}}).addTo(map);
 
         var currentValue = 0
         function moveSlider(value) { 
@@ -63,6 +77,8 @@
                     return L.marker(latlng,{icon: greenIcon})
                 }
             })
+            var iconSize = data.features[value].properties.populationEstimateEndOfYear;
+            
             map.addLayer(geojson);  
         }
  
