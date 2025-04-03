@@ -39,11 +39,11 @@
             maxZoom: 19,
         }).addTo(map);
 
-        var iconSize = 80;
+        var iconWidth = 80;
         
         var LeafIcon = L.Icon.extend({
             options: {
-                iconSize: iconSize,
+                iconSize: iconWidth,
                 iconAnchor:   [40, 22],
             }
         })
@@ -62,30 +62,28 @@
         
         var greenIcon = new LeafIcon({iconUrl: 'redWolfIcon.png'})
 
-        //var geojson = L.geoJson(data.features[0],{
-        //    pointToLayer: function(feature,latlng){
-        //        return L.marker(latlng,{icon: greenIcon})
-        //}}).addTo(map);
-
         var currentValue = 0
+        
+
         function moveSlider(value) { 
             currentValue = value 
-            map.removeLayer(geojson); 
+            //map.removeLayer(geojson); 
+            
             document.getElementById('daYear').innerHTML = 'The year is ' + data.features[value].properties.year 
-            geojson = L.geoJson(data.features[value],{
+            
+            var geojson = L.geoJson(data.features[value],{
                 pointToLayer: function(feature,latlng){
                     return L.marker(latlng,{icon: greenIcon})
+                    var size = data.features[value].properties.populationEstimateEndOfYear; 
+                    //return L.circleMarker(latlng, (size));
                 }
             })
-            var iconSize = data.features[value].properties.populationEstimateEndOfYear;
-            
             map.addLayer(geojson);  
         }
  
         moveSlider(0)
         window.onload = function() {
-        document.getElementById('dateSlider').value = 0;  
-            }; 
+        document.getElementById('dateSlider').value = 0;}; 
 
     </script>
 </body>
