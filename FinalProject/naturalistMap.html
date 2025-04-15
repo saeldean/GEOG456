@@ -50,14 +50,29 @@
                 return L.marker(latlng, {icon: redWolfIcon});
             },
             onEachFeature: function (feature, layer) {
-                if (feature.properties && feature.properties.observed_on && feature.properties.image_url) {
+                if (feature.properties && feature.properties.observed_on && feature.properties.image_url && feature.properties.description) {
                     layer.bindPopup(`
                         <div>
+                        <img src="${feature.properties.image_url}" alt="Wolf Image" width="150" />
+                        <p> The observer wrote the following description: ${feature.properties.description}</p>
                         <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
-                        <img src="${feature.properties.image_url}" alt="Wolf Image" width="100" />
                         </div>
-                    `); //this was written with help from chat
-                } else {
+                    `); //this was written with help from ai
+                } else if (feature.properties && feature.properties.observed_on && feature.properties.image_url) 
+                    layer.bindPopup(`
+                            <div>
+                            <img src="${feature.properties.image_url}" alt="Wolf Image" width="150" />
+                            <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
+                            </div>
+                        `);
+                else if (feature.properties && feature.properties.observed_on && feature.properties.description) 
+                    layer.bindPopup(`
+                            <div>
+                            <p> The observer wrote the following description: ${feature.properties.description}</p>
+                            <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
+                            </div>
+                        `);        
+                else {
                     layer.bindPopup("This wolf was observed on: " + feature.properties.observed_on + ".");
                 }
             }
