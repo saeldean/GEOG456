@@ -54,7 +54,8 @@
                     layer.bindPopup(`
                         <div>
                         <img src="${feature.properties.image_url}" alt="Wolf Image" width="150" />
-                        <p> The observer wrote the following description: ${feature.properties.description}</p>
+                        <p> The observer wrote the following description: </p>
+                        <p> ${feature.properties.description}</p>
                         <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
                         </div>
                     `); //this was written with help from ai
@@ -68,7 +69,8 @@
                 else if (feature.properties && feature.properties.observed_on && feature.properties.description) 
                     layer.bindPopup(`
                             <div>
-                            <p> The observer wrote the following description: ${feature.properties.description}</p>
+                            <p> The observer wrote the following description: </p>
+                            <p> ${feature.properties.description}</p>
                             <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
                             </div>
                         `);        
