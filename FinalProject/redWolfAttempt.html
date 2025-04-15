@@ -61,7 +61,6 @@
             if (geojsonLayer) {
                 map.removeLayer(geojsonLayer);
             }
-
     
             geojsonLayer = L.geoJson({ 
                 type: "FeatureCollection", 
@@ -71,7 +70,7 @@
                     
                     let dynamicIcon = L.icon({ 
                         iconUrl: 'brownCircle.png',   
-                        iconSize: [iconWidth, iconWidth],  // Update icon size dynamically
+                        iconSize: [iconWidth, iconWidth],
                         popupAnchor: [0, 0] 
                     });
                     
