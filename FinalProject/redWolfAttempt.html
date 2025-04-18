@@ -20,8 +20,37 @@
 <style>
     #map { 
         width: 100%;
-        height: 500px;
-         }
+        height: 300px;
+    }
+
+    #info {
+        display: flex;
+        align-items: flex-end;
+        height: 300px;
+        width: 100%;
+        background-color: #EDE8D0;
+    }
+
+    table {
+        font-family: Tahoma, sans-serif;
+        width: 100%;
+        border-radius: 8px; 
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 10px;
+    }
+    
+    .slider {
+        width: 100%;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 1;
+    }
+
 </style>
 
 <body>
@@ -29,60 +58,113 @@
     <h3 id ="daYear"> The year is 1987</h3>
     <h3 id ="daSize"> </h3>
 
-    <input id="dateSlider" type = "range" name = "Day" min = "0" max = "36" oninput="moveSlider(this.value)">
-    
-    <div id="map"></div>
+    <div class="slidecontainer">
+        <input class="slider" id="dateSlider" type = "range" name = "Day" min = "0" max = "36"  oninput="moveSlider(this.value)">
+    </div>
+
+    <div style="display: flex; flex-direction: row; gap: 10px;">
+        <div id="map"></div>
+        
+        <div id="info">
+            <table id="mytable">
+                <tr>
+                    <th>Adults Released</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Known Pups Born in the Wild</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Known Mortalities</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Mortalities as a Function of Population</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Population Estimate at the End of Year</th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <script>
-        
-        var map = L.map('map',{attributionControl: false }).setView([35.7928, -75.8766], 9);
-        
+        var map = L.map('map', { attributionControl: false }).setView([35.7928, -75.8766], 10);
+
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+        maxZoom: 19,
         }).addTo(map);
+
+        var markerGroup = L.layerGroup().addTo(map);
+        var geojsonLayer;
 
         var iconWidth = 7;
 
         var greenIcon = L.icon({ 
         iconUrl: 'brownCircle.png',   
-        iconSize: [iconWidth,iconWidth],
-        popupAnchor: [0,0] 
+        iconSize: [iconWidth, iconWidth],
+        popupAnchor: [0, 0] 
         });
         
         var currentValue = 0
            
         var geojsonLayer;  // This track the current GeoJSON layer
 
+        function makeCell(data) {
+        const keys = [
+            'adultsReleased',
+            'knownPupsBornInWild',
+            'knownMortalities',
+            'mortalitiesFunctionOfPopulation',
+            'populationEstimateEndOfYear'
+        ];
+
+        const table = document.getElementById('mytable');
+
+        keys.forEach((key, index) => {
+            const row = table.rows[index];
+            const cell = row.cells[1]; // second <th> in the row
+            cell.textContent = data[key] ?? 'N/A';
+        });
+    }
+
+
         function moveSlider(value) { 
-            currentValue = value; 
             
-            document.getElementById('daYear').innerHTML = 'The year is ' + data.features[value].properties.year +'.';
-            document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + data.features[value].properties.populationEstimateEndOfYear + ' red wolves.';
+            currentValue = value; 
+            const yearData = data.features[value].properties;
+
+            document.getElementById('daYear').innerHTML = 'The year is ' + yearData.year + '.';
+            document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + yearData.populationEstimateEndOfYear + ' red wolves.';
+
+            makeCell(yearData); // update table
 
             if (geojsonLayer) {
                 map.removeLayer(geojsonLayer);
             }
-    
+
             geojsonLayer = L.geoJson({ 
                 type: "FeatureCollection", 
                 features: [data.features[value]] }, {
                 pointToLayer: function(feature, latlng) {
-                    let iconWidth = feature.properties.populationEstimateEndOfYear; 
-                    
+                    let iconSize = Math.max(7, feature.properties.populationEstimateEndOfYear / 2); // prevent 0-size
                     let dynamicIcon = L.icon({ 
                         iconUrl: 'brownCircle.png',   
-                        iconSize: [iconWidth, iconWidth],
+                        iconSize: [iconSize, iconSize],
                         popupAnchor: [0, 0] 
                     });
-                    
                     return L.marker(latlng, { icon: dynamicIcon });
                 }
             });
-            map.addLayer(geojsonLayer);  
+            map.addLayer(geojsonLayer);
         }
 
         moveSlider(0);
-        window.onload = function() {
-        document.getElementById('dateSlider').value = 0;}; 
+            window.onload = function() {
+            document.getElementById('dateSlider').value = 0;}; 
 
     </script>
 </body>
