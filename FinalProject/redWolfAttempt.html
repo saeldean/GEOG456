@@ -114,7 +114,7 @@
         var geojsonLayer;  // This track the current GeoJSON layer
 
         function makeCell(data) {
-        const keys = [
+        var keys = [
             'adultsReleased',
             'knownPupsBornInWild',
             'knownMortalities',
@@ -122,11 +122,11 @@
             'populationEstimateEndOfYear'
         ];
 
-        const table = document.getElementById('mytable');
+        var table = document.getElementById('mytable');
 
         keys.forEach((key, index) => {
-            const row = table.rows[index];
-            const cell = row.cells[1]; // second <th> in the row
+            var row = table.rows[index];
+            var cell = row.cells[1]; // second <th> in the row
             cell.textContent = data[key] ?? 'N/A';
         });
     }

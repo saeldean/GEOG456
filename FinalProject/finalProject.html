@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Red Wolf</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <script src="./FWSdata.js"></script>
+    <script src="./photoNaturalistData.js"></script>
+
+    <style>
+        #map { 
+            width: 50%;
+            height: 400px;
+            
+        }
+        #emptyDiv{
+            height: 10px;
+        }
+        #maP { 
+            width: 94%; 
+            height: 500px;
+            margin: auto;
+        }
+        .randomPoint {
+            background: #55251D;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+        }
+        #info {
+            display: flex;
+            align-items: flex-end;
+            height: 400px;
+            width: 50%;
+            background-color: #E7D7C1;
+        }
+        table {
+            font-family: Tahoma, sans-serif;
+            width: 100%;
+            border-radius: 8px;
+        }
+        td, th {
+            border: 1px solid #A78A7F;
+            text-align: left;
+            padding: 10px;
+            color: #55251D;
+        }
+        .slider {
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;  
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%; 
+            background: #83BCFF;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #83BCFF;
+            cursor: pointer;
+        }
+        .the {
+            position: absolute;
+            top: 45%;
+            left: 49%;
+            color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 40px;
+        }
+        .red {
+            position:absolute;
+            top: 54%;
+            left: 49%;
+            color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 40px;
+        }
+        .wolf {
+            position: absolute;
+            top: 63%;
+            left: 48%; 
+            color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 40px;
+        }
+        .attribution{
+            position: absolute;
+            top: 98%;
+            right: 0%; 
+            color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 10px;
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .bg {
+            background-image: url("redWolfIntroImage.jpg");
+            height: 100%; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .intro{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <div class="the">THE</div>
+        <div class="red">RED</div>
+        <div class="wolf">WOLF </div>
+        <div class="attribution"><a href="https://biologicaldiversity.org/w/news/press-releases/legal-victory-secures-new-recovery-plan-endangered-red-wolves-2020-10-05/">This image comes from The Center for Biological Diversity.</a></div>
+    </div>
+
+    <h2 class="intro">The Red Wolf is the"world's most endangered wolf," says the U.S. Fish and Wildlife Service.</h2>
+    <div id="background"></div>
+
+    <h2 id ="daYear"> The year is 1987</h2>
+    <h3 id ="daSize"> </h3>
+
+    <div class="slidecontainer">
+        <input class="slider" id="dateSlider" type = "range" name = "Day" min = "0" max = "36" oninput="moveSlider(this.value)">
+    </div>
+
+    <div style="display: flex; flex-direction: row; gap: 10px;">
+        <div id="map"></div>
+        
+        <div id="info">
+            <table id="mytable">
+                <tr>
+                    <th>Adults Released</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Known Pups Born in the Wild</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Known Mortalities</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Mortalities as a Function of Population</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Population Estimate at the End of Year</th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="emptyDiv"></div>
+    <div id="maP"></div>
+    
+
+  <script>
+   
+   var map = L.map('map', {attributionControl: false }).setView([35.7928, -75.8766], 10);       
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+    var markerGroup = L.layerGroup().addTo(map);
+    var geojsonLayer;
+
+    //set rudimentary bounds within the vague polygon of ARWR
+    var bounds = {
+      north: 35.88790,
+      south: 35.64069,
+      east: -75.74601,
+      west: -75.97077
+    };
+    
+    function makeCell(data) {
+        var keys = [
+            'adultsReleased',
+            'knownPupsBornInWild',
+            'knownMortalities',
+            'mortalitiesFunctionOfPopulation',
+            'populationEstimateEndOfYear'
+        ];
+
+        var table = document.getElementById('mytable');
+
+        keys.forEach((key, index) => {
+            var row = table.rows[index];
+            var cell = row.cells[1]; // second <th> in the row
+            cell.textContent = data[key] ?? 'N/A';
+        });
+    }
+
+    function moveSlider(value) { 
+            
+        var feature = data.features[value];
+        var yearData = feature.properties;
+        //this variable moves into the properties of the feature at value 
+
+        document.getElementById('daYear').innerHTML = 'The year is ' + yearData.year + '.';
+            document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + yearData.populationEstimateEndOfYear + ' red wolves.';
+
+            makeCell(yearData); // update table
+
+        if (geojsonLayer) {
+            map.removeLayer(geojsonLayer);
+        }
+
+        var geojsonLayer = L.geoJson({
+            type: "FeatureCollection",
+            features: [data.features[value]]
+        });    
+
+        map.addLayer(geojsonLayer);
+        
+        //clear previous random points
+        markerGroup.clearLayers();
+
+        //I had a strange marker show up in the middle of my map and this function removes such marker
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker && !markerGroup.hasLayer(layer)) {
+                map.removeLayer(layer);
+            }
+        });
+
+        var estimate = yearData.populationEstimateEndOfYear;
+        var numPoints = Math.max(5, Math.floor(estimate));
+
+        for (let i = 0; i < numPoints; i++) {
+            var lat = Math.random() * (bounds.north - bounds.south) + bounds.south;
+            var lng = Math.random() * (bounds.east - bounds.west) + bounds.west;
+
+            var circleIcon = L.divIcon({ className: 'randomPoint' });
+            L.marker([lat, lng], { icon: circleIcon }).addTo(markerGroup);
+            }
+        }
+
+        moveSlider(0);
+            window.onload = function() {
+            document.getElementById('dateSlider').value = 0;}; 
+
+    </script>
+
+
+    <script>
+        // map two code
+        var maP = L.map('maP', {attributionControl: false }).setView([35.7928, -75.8766], 10);        
+        
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }).addTo(maP);  
+
+        var redWolfIcon = L.icon({ 
+        iconUrl: './redWolfIcon.png',   
+        iconSize: [40,25],
+        popupAnchor: [0,0] 
+        });
+
+        var imageUrl= photoData.features[0].properties.image_url, 
+
+        popUpIcon = L.icon({ 
+        iconUrl: imageUrl,  
+        iconSize: [25,25],
+        popupAnchor: [0,0] 
+        });
+
+        L.geoJSON(photoData, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {icon: redWolfIcon});
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.observed_on && feature.properties.image_url && feature.properties.description) {
+                    layer.bindPopup(`
+                        <div>
+                        <img src="${feature.properties.image_url}" alt="Wolf Image" width="150" />
+                        <p> The observer wrote the following description: </p>
+                        <p> ${feature.properties.description}</p>
+                        <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
+                        </div>
+                    `); //this was written with help from ai
+                } else if (feature.properties && feature.properties.observed_on && feature.properties.image_url) 
+                    layer.bindPopup(`
+                            <div>
+                            <img src="${feature.properties.image_url}" alt="Wolf Image" width="150" />
+                            <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
+                            </div>
+                        `);
+                else if (feature.properties && feature.properties.observed_on && feature.properties.description) 
+                    layer.bindPopup(`
+                            <div>
+                            <p> The observer wrote the following description: </p>
+                            <p> ${feature.properties.description}</p>
+                            <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
+                            </div>
+                        `);        
+                else {
+                    layer.bindPopup("This wolf was observed on: " + feature.properties.observed_on + ".");
+                }
+            }
+        }).addTo(maP);
+
+    </script>
+</body>
+</html>
