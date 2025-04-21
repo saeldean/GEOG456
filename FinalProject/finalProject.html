@@ -126,7 +126,48 @@
         }
         .intro{
             text-align: center;
+            color: #55251D;
         }
+        .ESAintro{
+            width: 94%;
+            margin:auto;
+        }
+        #under{
+            text-decoration: underline;
+            color: #63A088;
+        }
+        #introText{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            width: 100%;
+        }
+        .background{
+            width: 120%;
+            margin: auto;
+            padding-right: 30px;
+        }
+        
+        .introContainer {
+            display: flex;
+            width: 94%;
+            align-items: center;
+            margin: auto;
+        }
+        .historicRangeImage img {
+            width:80%;
+            height: auto;
+        }
+        
+        .mapSlider{
+            width: 94%;
+            margin: auto;
+            border-radius: 25px;
+            border: 2px solid #63A088;
+            padding: 20px; 
+            width: 94%;
+            height: auto;  
+        }
+
     </style>
 </head>
 
@@ -140,43 +181,71 @@
     </div>
 
     <h2 class="intro">The Red Wolf is the"world's most endangered wolf," says the U.S. Fish and Wildlife Service.</h2>
-    <div id="background"></div>
+    
+    <div class="introContainer">
+        
+        <div class="background">
+            <h2 id="under">Background</h2>
+            <p id="introText">The red wolf, <i>Canis rufus</i>, was originally found throughout the southeastern United States; however, anthropogenic activities like wetland drainage, dam construction, and hunting caused the population to dwindle to meager numbers such that it was listed as endangered (<a href="https://www.ca4.uscourts.gov/Opinions/Published/991218.P.pdf">U.S. Court of Appeals</a>).</p>
+            <p id="introText">By 1972, the species population size and extent of range had been dramatically reduced from the southeastern U.S. to a small coastal area in southeast Texas and southwest Louisiana, see map to the right (<a href="https://www.fws.gov/project/red-wolf-recovery-program">Fish and Wildlife Service</a>). Four years later, in 1976, the species was recognized as “Endangered” under the Endangered Species Act of 1973 (<a href="https://www.ca4.uscourts.gov/Opinions/Published/991218.P.pdf">US Court of Appeals</a>). </p>
+            <p id="introText">As a consequence of small population size, their poor physical condition, and threats posed by inbreeding, the Fish and Wildlife Service (FWS) began trapping remaining red wolves in the mid-1970s. Captured wolves were placed in a breeding program which anticipated the eventual reintroduction of wolves into the wild (<a href="https://www.ca4.uscourts.gov/Opinions/Published/991218.P.pdf">U.S. Court of Appeals</a>).</p>
+        </div>
 
-    <h2 id ="daYear"> The year is 1987</h2>
-    <h3 id ="daSize"> </h3>
+        <div class="historicRangeImage">
+            <img src="./usfws-red-wolf-range-map-large.jpeg" alt="Image of the historic extent of the Red Wolf.">
+        </div>
 
-    <div class="slidecontainer">
-        <input class="slider" id="dateSlider" type = "range" name = "Day" min = "0" max = "36" oninput="moveSlider(this.value)">
     </div>
 
-    <div style="display: flex; flex-direction: row; gap: 10px;">
-        <div id="map"></div>
+    <div class="ESAintro">
+        <h3 id="under">The Endangered Species Act</h3>
+        <p id="introText">The Endangered Species Act (ESA) provides programing for the preservation and conservation of threatened and endangered plants and animals in their natural habitat. </p>
+        <p id="introText">§4(A)(1) “The Secretary shall by regulation promulgated in accordance with subsection (b) determine whether any species is an endangered species or a threatened species…” (ESA)</p>
+        <p id="introText">As described in §4(A)(1) of the ESA, the Secretary of the Interior, a member of the United States Cabinet, is responsible for the determination of endangered species. The Secretary delegates the responsibility of implementing the ESA for terrestrial and freshwater species to the U.S. Fish and Wildlife Service (FWS), while the responsibility for marine species has been delegated to the Department of Commerce (<a href="https://www.congress.gov/crs-product/R45265">Congress</a>).</p>
+
+    </div>
+    
+    <div class="mapSlider">
+        <div class="mapText">
+            <h2 id ="daYear"> The year is 1987</h2>
+            <h3 id ="daSize"> </h3>
+        </div>
         
-        <div id="info">
-            <table id="mytable">
-                <tr>
-                    <th>Adults Released</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Known Pups Born in the Wild</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Known Mortalities</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Mortalities as a Function of Population</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Population Estimate at the End of Year</th>
-                    <th></th>
-                </tr>
-            </table>
+
+        <div class="slidecontainer">
+            <input class="slider" id="dateSlider" type = "range" name = "Day" min = "0" max = "36" oninput="moveSlider(this.value)">
+        </div>
+
+        <div style="display: flex; flex-direction: row; gap: 10px;">
+            <div id="map"></div>
+            
+            <div id="info">
+                <table id="mytable">
+                    <tr>
+                        <th>Adults Released</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Known Pups Born in the Wild</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Known Mortalities</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Mortalities as a Function of Population</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>Population Estimate at the End of Year</th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
+
     <div id="emptyDiv"></div>
     <div id="maP"></div>
     
@@ -213,7 +282,7 @@
 
         keys.forEach((key, index) => {
             var row = table.rows[index];
-            var cell = row.cells[1]; // second <th> in the row
+            var cell = row.cells[1]; 
             cell.textContent = data[key] ?? 'N/A';
         });
     }
@@ -225,9 +294,9 @@
         //this variable moves into the properties of the feature at value 
 
         document.getElementById('daYear').innerHTML = 'The year is ' + yearData.year + '.';
-            document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + yearData.populationEstimateEndOfYear + ' red wolves.';
+        document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + yearData.populationEstimateEndOfYear + ' red wolves.';
 
-            makeCell(yearData); // update table
+        makeCell(yearData); // update table
 
         if (geojsonLayer) {
             map.removeLayer(geojsonLayer);
@@ -240,7 +309,6 @@
 
         map.addLayer(geojsonLayer);
         
-        //clear previous random points
         markerGroup.clearLayers();
 
         //I had a strange marker show up in the middle of my map and this function removes such marker
