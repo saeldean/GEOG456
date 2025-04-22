@@ -27,7 +27,7 @@
             height: 10px;
         }
         #maP { 
-            width: 94%; 
+            width: 100%; 
             height: 500px;
             margin: auto;
         }
@@ -136,10 +136,49 @@
             text-decoration: underline;
             color: #63A088;
         }
+        #under2{
+            color: #63A088;
+        }
+        #title{
+            text-decoration: underline;
+            color: #55251D;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+
+        }
         #introText{
             font-family: 'Times New Roman', Times, serif;
             font-size: 18px;
             width: 100%;
+        }
+        #centerIntroText{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            width: 100%;
+            text-align: center;
+        }
+        #imgAttribution{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            width: 100%;
+        }
+        #history{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            width: 100%;
+        }
+        #coreText{
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            width: 100%;
+            color: #A78A7F;
+        }
+        #ESAText{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            width: 100%;
+            color: #A78A7F;
         }
         .background{
             width: 120%;
@@ -157,7 +196,6 @@
             width:80%;
             height: auto;
         }
-        
         .mapSlider{
             width: 94%;
             margin: auto;
@@ -198,15 +236,41 @@
     </div>
 
     <div class="ESAintro">
-        <h3 id="under">The Endangered Species Act</h3>
-        <p id="introText">The Endangered Species Act (ESA) provides programing for the preservation and conservation of threatened and endangered plants and animals in their natural habitat. </p>
-        <p id="introText">§4(A)(1) “The Secretary shall by regulation promulgated in accordance with subsection (b) determine whether any species is an endangered species or a threatened species…” (ESA)</p>
+        <h2 id="under">The Endangered Species Act</h2>
+        <p id="introText">The Endangered Species Act (<a href="https://www.fws.gov/sites/default/files/documents/endangered-species-act-accessible.pdf">ESA</a>) provides programming for the preservation and conservation of threatened and endangered plants and animals in their natural habitat. The statute was enacted in 1973 as a response to declining populations of many plants and animals both domestically and globally. Further, the national bird, the bald eagle, had experienced drastic population decline as a result of hunting, habitat loss, and the rampant use of the toxic pesticide DDT, explains <a href="https://www.nrdc.org/stories/10-things-you-didnt-know-about-endangered-species-act">Natural Resources Defense Council</a>.</p>
+        
+        <h3 id="under">Core Provision</h3>
+        <p id="coreText">§9(a)(1)(B) "It is unlawful for any <i>person</i> subject to the jurisdiction of the United States to <i>take</i> any such [endangered] species..."</p>
+        <p id="introText">The definitions of <i>person</i> and <i>take</i>, as outlined at the beginning of the statute will fundamentally shape our understanding of the ESA. </p>
+        <p id="ESAText">§(1)(13) of the statute defines "person" as "an individual, ... or any other private entity; or any officer, employee, agent, department, or instrumentality of the Federal Government, of any State, municipality, or political subdivision of a State, or of any foreign government... or any other entity subject to the jurisdiction of the United States." </p>
+        <p id="ESAText">§(1)(19) of the statute defines "take" as "to harass, harm, pursue, hunt, shoot, wound, kill, trap, capture, or collect, or to attempt to engage in any such conduct." </p>
+        <p id="introText">Section (1)(19) of the ESA mandates that to "take" and endangered species, which is illegal under§9(a)(1)(B), includes to "harm" such species. However, the scope of the definition of "harm" in this statute had been vague until the 1995 case of Babbitt v. Sweet Home. In this case, the Supreme Court ruled in a 6-3 vote that the definition of "take" includes habitat modification. Thus, if a property has an endangered species on it, that habitat may not be modified in any such way that modifies the habitat. </pp>
+        <h3 id="under">Who is Responsible for Endangered Species?</h3>
+        <p id="ESAText">§4(A)(1) “The Secretary shall by regulation promulgated in accordance with subsection (b) determine whether any species is an endangered species or a threatened species…” (ESA)</p>
         <p id="introText">As described in §4(A)(1) of the ESA, the Secretary of the Interior, a member of the United States Cabinet, is responsible for the determination of endangered species. The Secretary delegates the responsibility of implementing the ESA for terrestrial and freshwater species to the U.S. Fish and Wildlife Service (FWS), while the responsibility for marine species has been delegated to the Department of Commerce (<a href="https://www.congress.gov/crs-product/R45265">Congress</a>).</p>
+    </div>
+
+    <div id="emptyDiv"></div>
+
+    <h2 id="title">Red Wolf Conservation in North Carolina</h2>
+    <div class="introContainer">
+        <div class="historicRangeImage">
+            <img src="./babyRedWolves.jpg" alt="An image of three wild red wolf pups.">
+            <p id="imgAttribution">Image from: <a href="https://coastalreview.org/2022/10/managers-report-positive-shift-in-red-wolf-recovery-efforts/">Nancy Arehart Photography</a></p>
+        </div>
+        <div class="history">
+            <p id="introText">In 1972, the wild red wolf population was limited to a small coastal area in southeast Texas and southwest Louisiana (see map above). From 1973 to 1980, the FWS trapped wild canids and established a captive breeding program with the intention to prevent extinction and establish a wild population. This program was established at the Alligator River National Wildlife Refuge in eastern North Carolina. </p>
+            <p id="introText">As a consequence of diligent work, by 1987, there were approximately 63 individuals in the Red Wolf Species Survival Plan program. Through coordinated efforts, the first releases were made that year- eight wolves were released and seven were surviving by the end of the year.</p>
+            <p id="introText">This was the first time a large carnivore had been declared extinct in the wild by FWS and was reintroduced. Its success has been noted globally and several subsequent reintroduction efforts have been modeled after the Red Wolf Recovery Program, like the gray wolf introductions in Yellowstone and central Idaho, explains <a href="https://www.fws.gov/project/red-wolf-recovery-program">FWS</a>. </p>
+        </div>
 
     </div>
+
+  
     
     <div class="mapSlider">
         <div class="mapText">
+            <h2 id="under2">Explore the following visualization to understand how the wild population of red wolves at Alligator River National Wildlife Refuge has changed from 1987 to 2023.</h2>
             <h2 id ="daYear"> The year is 1987</h2>
             <h3 id ="daSize"> </h3>
         </div>
@@ -244,10 +308,32 @@
                 </table>
             </div>
         </div>
+        <p id="centerIntroText">The data used in the above visualization comes from the U.S. Fish and Wildlife Service and can be found at the following <a href="https://www.fws.gov/project/red-wolf-recovery-program">page</a>.</p>
     </div>
 
     <div id="emptyDiv"></div>
-    <div id="maP"></div>
+    <div id="emptyDiv"></div>
+
+    <div class="ESAintro">
+        <h2 id="under">Citizen Science</h2>
+        <p id="introText">Citizen science, as defined by <a href="https://education.nationalgeographic.org/resource/citizen-science-article/">National Geographic</a>, is the practice of public participation in scientific research through methods like data monitoring and collection. Anyone can be a citizen scientist! These are curious or concerned people who collaborate with professional scientists to advance research in areas they care about. </p>
+        <p id="introText">An accessible way to participate in citizen science is through the app, iNaturalist. iNaturalist is a crowdsourced species identification system and an occurrence recording tool which allows users to upload images of biota, record observations, and  receive help with identification! User findings are shared with data repositories like the Global Biodiversity Information Facility, enabling scientists to analyze recorded data (<a href="https://www.inaturalist.org/pages/about#:~:text=Vision%3A%20iNaturalist's%20vision%20is%20a,advance%20biodiversity%20science%20and%20conservation.">iNaturalist</a>).</p>
+        <p id="introText">The map below depicts red wolf data collected by citizen scientists on the platform iNaturalist. Click on each icon to explore when a red wolf was seen at a particular location. The observations shown in this map span from December 6th, 2015 to as recent as April 4th, 2025. </p>
+    </div>
+    <div class="mapSlider">
+        <div id="maP"></div>
+    </div>
+    <div class="ESAintro">
+        <p id="introText">If you want to learn more about the red wolf, you can learn more from the <a href="https://www.fws.gov/project/red-wolf-recovery-program">Fish and Wildlife Service</a>.</p>
+        <p id="introText">You can dive into the Endangered Species Act of 1973 <a href="https://www.fws.gov/sites/default/files/documents/endangered-species-act-accessible.pdf">here</a>.</p>
+        <p id="introText">If you would like to see a synthesized red wolf timeline, you can find one by the International Wolf Centere <a href="http://wolf.org/red-wolf-timeline/">here</a>.</p>
+        <div id="emptyDiv"></div>
+        <div id="emptyDiv"></div>
+        <p id="introText">Created by Sarah Ellen Dean for GEOG456 Final Project. April 2025.</p>
+        <div id="emptyDiv"></div>
+        <div id="emptyDiv"></div>
+    </div>
+    
     
 
   <script>
