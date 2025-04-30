@@ -59,7 +59,8 @@
                         <p> ${feature.properties.description}</p>
                         <p>This wolf was observed on: ${feature.properties.observed_on}.</p>
                         </div>
-                    `); //this was written with help from ai
+                    `); //this was written with help from ai 
+                    // “rewrite the following code in order to display the date the wolf was observed on, the description, and image if it has one.”
                 } else if (feature.properties && feature.properties.observed_on && feature.properties.image_url) 
                     layer.bindPopup(`
                             <div>

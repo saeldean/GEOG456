@@ -56,7 +56,7 @@
 <body>
     <h2>The US FWS began making releases of Red Wolves at Alligator River National Wildlife Refuge in 1987.</h2>
     <h3 id ="daYear"> The year is 1987</h3>
-    <h3 id ="daSize"> </h3>
+    <h3 id ="daSize"> The current estimated wild population is 7 red wolves.</h3>
 
     <div class="slidecontainer">
         <input class="slider" id="dateSlider" type = "range" name = "Day" min = "0" max = "36"  oninput="moveSlider(this.value)">
@@ -109,10 +109,12 @@
         popupAnchor: [0, 0] 
         });
         
-        var currentValue = 0
+       
            
         var geojsonLayer;  // This track the current GeoJSON layer
 
+
+        //ChatGPT written. Propmt: "Update the following code so that the table dynamically updates with each movement of the slider."
         function makeCell(data) {
         var keys = [
             'adultsReleased',
@@ -130,12 +132,12 @@
             cell.textContent = data[key] ?? 'N/A';
         });
     }
-
+        var currentValue = 0
 
         function moveSlider(value) { 
             
             currentValue = value; 
-            const yearData = data.features[value].properties;
+            var yearData = data.features[value].properties;
 
             document.getElementById('daYear').innerHTML = 'The year is ' + yearData.year + '.';
             document.getElementById('daSize').innerHTML = 'The current estimated wild population is ' + yearData.populationEstimateEndOfYear + ' red wolves.';
